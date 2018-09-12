@@ -1,2 +1,3 @@
 (sym_lib_table
+  (lib (name TE_ReedRelay_V23100V4)(type Legacy)(uri H:/Workspace/ElectronicsProjects/TestAndMeasurement/ArduinoDigitalLCMeter/Hardware/lib/TE_ReedRelay_V23100V4.lib)(options "")(descr ""))
 )

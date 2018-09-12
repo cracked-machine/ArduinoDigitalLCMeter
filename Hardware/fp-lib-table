@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name TE_Reed_Relay_V23100V4)(type KiCad)(uri ${KIPRJMOD}/lib/TE_Reed_Relay_V23100V4.pretty)(options "")(descr ""))
+)

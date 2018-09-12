@@ -144,12 +144,6 @@ Wire Wire Line
 	4475 2750 4475 3475
 Wire Wire Line
 	3025 2750 4025 2750
-Wire Wire Line
-	8450 5825 8450 6125
-Text Label 8450 6125 1    60   ~ 0
-GND
-Wire Wire Line
-	8850 5825 8850 6125
 Text Label 8850 6125 1    60   ~ 0
 GND
 Wire Wire Line
@@ -196,17 +190,15 @@ CL_BAR_PIN2
 Text Notes 2550 4475 0    63   ~ 0
 DPDT:\nUP1\nDOWN1\nIN1\nIN2\nUP2\nDOWN2
 Wire Wire Line
-	9550 5700 9550 6125
+	9550 5875 9550 6125
 Text Label 9550 6125 1    60   ~ 0
 GND
 Wire Wire Line
-	9550 5400 9550 5000
+	9550 5150 9550 4800
 Wire Wire Line
-	8850 5000 9550 5000
-Wire Wire Line
-	8850 5000 8850 5225
-Connection ~ 9550 5000
-Text Label 10400 5000 2    60   ~ 0
+	8850 4800 9550 4800
+Connection ~ 9550 4800
+Text Label 10400 4800 2    60   ~ 0
 RELAY_PIN3
 Wire Wire Line
 	8500 2275 7725 2275
@@ -254,9 +246,7 @@ Wire Wire Line
 Text Label 4800 6700 0    60   ~ 0
 GND
 Wire Wire Line
-	8450 5225 8450 4800
-Wire Wire Line
-	8450 4800 4475 4800
+	8650 4800 4475 4800
 Wire Wire Line
 	4475 4800 4475 3775
 Wire Wire Line
@@ -326,7 +316,7 @@ Wire Wire Line
 Wire Wire Line
 	4025 2750 4475 2750
 Wire Wire Line
-	9550 5000 10400 5000
+	9550 4800 10400 4800
 Wire Wire Line
 	7125 3700 7125 3875
 Wire Wire Line
@@ -567,17 +557,6 @@ F 3 "~" H 6425 2100 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L Device:D D1
-U 1 1 5B978454
-P 9550 5550
-F 0 "D1" V 9504 5629 50  0000 L CNN
-F 1 "1N4148" V 9595 5629 50  0000 L CNN
-F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 9550 5550 50  0001 C CNN
-F 3 "~" H 9550 5550 50  0001 C CNN
-	1    9550 5550
-	0    1    1    0   
-$EndComp
-$Comp
 L Comparator:LM311 U_OSC1
 U 1 1 5B978CA1
 P 6375 2850
@@ -587,17 +566,6 @@ F 2 "Package_DIP:DIP-8_W7.62mm_Socket" H 6375 2850 50  0001 C CNN
 F 3 "http://www.ti.com/lit/ds/symlink/lm311.pdf" H 6375 2850 50  0001 C CNN
 	1    6375 2850
 	1    0    0    -1  
-$EndComp
-$Comp
-L Relay:G5Q-1A K1
-U 1 1 5B979EA0
-P 8650 5525
-F 0 "K1" H 8220 5571 50  0000 R CNN
-F 1 "G5Q-1A" H 8220 5480 50  0000 R CNN
-F 2 "Relay_THT:Relay_SPST_Omron-G5Q-1A" H 9000 5475 50  0001 L CNN
-F 3 "https://www.omron.com/ecb/products/pdf/en-g5q.pdf" H 9750 5225 50  0001 C CNN
-	1    8650 5525
-	-1   0    0    -1  
 $EndComp
 $Comp
 L Device:L_Core_Ferrite_Small L1
@@ -610,4 +578,57 @@ F 3 "~" H 3725 3225 50  0001 C CNN
 	1    3725 3225
 	0    -1   -1   0   
 $EndComp
+$Comp
+L TE_ReedRelay_V23100V4:TE_ReedRelay_V23100V4xxxA010 U_RLY1
+U 1 1 5B996138
+P 8800 5475
+F 0 "U_RLY1" H 8450 5400 60  0000 R CNN
+F 1 "TE_ReedRelay_V23100V4xxxA010" H 8450 5575 60  0000 R CNN
+F 2 "TE_Reed_Relay_V23100V4:TE_ReedRelay_V23100V4" H 8800 5455 60  0001 C CNN
+F 3 "" H 8800 5455 60  0001 C CNN
+	1    8800 5475
+	1    0    0    1   
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x01 J_DK1
+U 1 1 5B9A08C2
+P 9550 5350
+F 0 "J_DK1" V 9425 5430 50  0000 L CNN
+F 1 "Conn_01x01" V 9514 5430 50  0000 L CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical" H 9550 5350 50  0001 C CNN
+F 3 "~" H 9550 5350 50  0001 C CNN
+	1    9550 5350
+	0    1    1    0   
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x01 J_DA1
+U 1 1 5B9A3151
+P 9550 5675
+F 0 "J_DA1" V 9515 5588 50  0000 R CNN
+F 1 "Conn_01x01" V 9426 5588 50  0000 R CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical" H 9550 5675 50  0001 C CNN
+F 3 "~" H 9550 5675 50  0001 C CNN
+	1    9550 5675
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	8750 5850 8850 5850
+Connection ~ 8850 5850
+Wire Wire Line
+	8850 5850 8850 6125
+Wire Wire Line
+	8950 5850 8850 5850
+NoConn ~ 8950 5175
+NoConn ~ 8750 5175
+NoConn ~ 8650 5775
+Wire Wire Line
+	8850 4800 8850 5175
+Wire Wire Line
+	8650 5175 8650 4800
+Wire Wire Line
+	8750 5775 8750 5850
+Wire Wire Line
+	8850 5775 8850 5850
+Wire Wire Line
+	8950 5775 8950 5850
 $EndSCHEMATC
