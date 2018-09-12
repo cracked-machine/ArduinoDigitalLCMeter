@@ -33,6 +33,8 @@ Adafruit_SSD1306 display(OLED_RESET);
 
 // ====================================================================
 // declaration of global variables
+int charSize = 2;
+
 const float Pi = 3.14159;     // define Pi
 const float FourPiSqrd = 39.4784;  // and Pi squared
 const float uHmult = 1.0e6;   // multiplier for converting H into uH
@@ -65,6 +67,8 @@ long Freq2;    // measured Freq2 in Hz (L1 & (C1 + C2))
 long Freq3;    // measured Freq3 in Hz (C1+Cx/L1 or C1/L1+Lx)
 
 byte MTorNot = 0;   // flag: 0 = EEPROM addresses empty (== 255)
+
+
 
 // ====================================================================
 // setup function begins here
@@ -142,8 +146,11 @@ void setup()
     else
     {
       //lcd.print("Fit shorting bar"); // S1 in 'L' position, so signal
-      Serial.println("Fit shorting bar");
-      lcd_printLn("S1 set for C: OK");
+      lcd_printLn("Set to CX and reset!");
+      while(1) 
+      {
+       // spin wheels while waiting for user reset       
+      }
     }                                // need for shorting bar
     delay(1000);
     lcd_reset();
@@ -191,7 +198,7 @@ void loop()
     if(CXval < 1.0e-9)     // if CXval < 1nF
     {
       float CXpF = CXval * pFmult;  // get equiv value in pF
-      Cdisp = " Cx = ";  // then assemble top line string
+     // Cdisp = " Cx = ";  // then assemble top line string
       Cdisp += String(CXpF, 3);
       Cdisp += " pF";
     }
@@ -200,21 +207,23 @@ void loop()
       if(CXval < 1.0e-6)    // but check if it's less than 1uF
       {
         float CXnF = CXval * nFmult;  // if so, get equiv value in nF
-        Cdisp = "Cx = ";   // then assemble top line string
+        //Cdisp = "Cx = ";   // then assemble top line string
         Cdisp += String(CXnF, 3);
         Cdisp += " nF";
       }
       else    // value must be 1uF or more
       {
         float CXuF = CXval * uFmult;  // so get equiv value in uF
-        Cdisp = "Cx = ";  // then assemble top line string
+       // Cdisp = "Cx = ";  // then assemble top line string
         Cdisp += String(CXuF, 3);
         Cdisp += " uF";  
       }
     }
     //lcd.print(Cdisp);  // now display the cap value string
+    lcd_setText(1,charSize);
     Serial.println(Cdisp);
     lcd_printLn(Cdisp);
+    lcd_setText(1,1);
   }
   else    // CLbarPin == LOW, so we must be measuring an L
   {
@@ -223,7 +232,7 @@ void loop()
     if(LXval < 1.0e-3)     // if LXval < 1mH
     {
       float LXuH = LXval * uHmult; // convert to uH 
-      Ldisp = " Lx = "; // then assemble top line string
+      //Ldisp = " Lx = "; // then assemble top line string
       Ldisp += String(LXuH, 3);
       Ldisp += " uH";
     }
@@ -242,8 +251,10 @@ void loop()
       }
     }
     //lcd.print(Ldisp);  // show inductance value or over range msg
+    lcd_setText(1,charSize);
     Serial.println(Ldisp);
     lcd_printLn(Ldisp);
+    lcd_setText(1,1);
   }
   //lcd.setCursor(0,1);     // then show F3 on second line
   String F3disp = "(F3 = ";
