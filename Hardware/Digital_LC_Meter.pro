@@ -1,4 +1,4 @@
-update=01-09-2018 5:49:50 PM
+update=14-09-2018 1:45:05 AM
 version=1
 last_client=kicad
 [pcbnew]
@@ -64,10 +64,10 @@ version=1
 [schematic_editor]
 version=1
 PageLayoutDescrFile=
-PlotDirectoryName=lib/
+PlotDirectoryName=docs/
 SubpartIdSeparator=0
 SubpartFirstId=65
 NetFmtName=
-SpiceForceRefPrefix=0
-SpiceUseNetNumbers=0
+SpiceAjustPassiveValues=0
 LabSize=60
+ERC_TestSimilarLabels=1

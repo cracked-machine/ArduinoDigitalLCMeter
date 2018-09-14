@@ -16,6 +16,16 @@
    If you have one of these latter modules, the only change that
    should need to be made is to change the address in line 21 below.
  */
+
+ #include "Wire.h"
+extern "C" { 
+#include "utility/twi.h"  // from Wire library, so we can do bus scanning
+}
+ 
+#define TCAADDR 0x70
+ 
+
+
 #include <Wire.h>
 //#include <LiquidCrystal_I2C.h>
 //LiquidCrystal_I2C lcd(0x27,16,2);   // set the LCD address to 0x27,
@@ -68,13 +78,20 @@ long Freq3;    // measured Freq3 in Hz (C1+Cx/L1 or C1/L1+Lx)
 
 byte MTorNot = 0;   // flag: 0 = EEPROM addresses empty (== 255)
 
-
+void tcaselect(uint8_t i) {
+  if (i > 7) return;
+ 
+  Wire.beginTransmission(TCAADDR);
+  Wire.write(1 << i);
+  Wire.endTransmission();  
+}
 
 // ====================================================================
 // setup function begins here
 // ====================================================================
 void setup()
 {
+  Wire.begin();
   Serial.begin(9600);
   pinMode(CLbarPin, INPUT_PULLUP);    // make pin 2 an input with pullup
   pinMode(RelayPin, OUTPUT);          // but make pin3 an output
@@ -85,6 +102,7 @@ void setup()
   pinMode(CalLkPin, INPUT_PULLUP);    // and make pin 7 an input with pullup
   pinMode(CalErase, INPUT_PULLUP);    // make pin 8 an input with pullup *CJS
 
+  tcaselect(0);
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);  // initialize with the I2C addr 0x3C (for the 128x32)
   display.display();
   delay(100);
@@ -94,6 +112,7 @@ void setup()
   
   
   lcd_printLn("Silicon Chip");
+  
   Serial.println("Silicon Chip");
   
   lcd_printLn("Digital LC Meter");

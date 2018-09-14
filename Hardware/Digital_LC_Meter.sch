@@ -162,7 +162,7 @@ Wire Wire Line
 Wire Wire Line
 	1325 4125 2275 4125
 Wire Wire Line
-	1325 4225 2275 4225
+	1325 4225 1375 4225
 Text Label 3025 2750 0    60   ~ 0
 IND_PARALLEL
 Text Label 3025 3225 0    60   ~ 0
@@ -485,7 +485,7 @@ U 1 1 5B972EF1
 P 6625 3700
 F 0 "R_OSC1" V 6418 3700 50  0000 C CNN
 F 1 "47K" V 6509 3700 50  0000 C CNN
-F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal" V 6555 3700 50  0001 C CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" V 6555 3700 50  0001 C CNN
 F 3 "~" H 6625 3700 50  0001 C CNN
 	1    6625 3700
 	0    1    1    0   
@@ -751,4 +751,11 @@ NoConn ~ 10300 3800
 NoConn ~ 10300 3900
 NoConn ~ 10300 4000
 NoConn ~ 10300 4100
+Wire Wire Line
+	1375 4225 1375 4575
+Connection ~ 1375 4225
+Wire Wire Line
+	1375 4225 2275 4225
+Text Label 1375 4575 1    60   ~ 0
+GND
 $EndSCHEMATC
