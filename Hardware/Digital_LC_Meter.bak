@@ -19,9 +19,9 @@ Comment2 ""
 Comment3 ""
 Comment4 ""
 $EndDescr
-Text Notes 8875 2525 0    63   ~ 0
+Text Notes 8850 3725 0    63   ~ 0
 TX\nRX\nRST\nGND\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12
-Text Notes 9800 2525 0    63   ~ 0
+Text Notes 9775 3725 0    63   ~ 0
 VIN\nGND\nRST\n5V\n21\n20\n19\n18\n17\n16\n15\n14\nAREF\n3V3\n13\n
 Wire Wire Line
 	1525 1650 2025 1650
@@ -34,40 +34,40 @@ Wire Wire Line
 Text Label 2600 2000 0    60   ~ 0
 GND
 Wire Wire Line
-	10300 1100 10525 1100
-Text Label 10525 1100 0    60   ~ 0
+	10275 2300 10500 2300
+Text Label 10500 2300 0    60   ~ 0
 VIN
 Wire Wire Line
-	10300 1200 10525 1200
-Text Label 10525 1200 0    60   ~ 0
+	10275 2400 10500 2400
+Text Label 10500 2400 0    60   ~ 0
 GND
 Wire Wire Line
 	1625 6150 1375 6150
-Text Label 1375 6150 0    60   ~ 0
-SDA0
+Text Label 1375 6350 0    60   ~ 0
+SDA
 Wire Wire Line
 	1625 6250 1375 6250
-Text Label 1375 6250 0    60   ~ 0
-SCL0
+Text Label 1375 6450 0    60   ~ 0
+SCL
 Wire Wire Line
 	1625 6350 1375 6350
-Text Label 1375 6350 0    60   ~ 0
+Text Label 1375 6250 0    60   ~ 0
 GND
 Wire Wire Line
 	1625 6450 1375 6450
-Text Label 1375 6450 0    60   ~ 0
+Text Label 1375 6150 0    60   ~ 0
 5V
 Wire Wire Line
-	10300 1400 10525 1400
-Text Label 10525 1400 0    60   ~ 0
+	10275 2600 10500 2600
+Text Label 10500 2600 0    60   ~ 0
 5V
 Wire Wire Line
-	10300 1800 10525 1800
-Text Label 10525 1800 0    60   ~ 0
+	10275 3000 10500 3000
+Text Label 10500 3000 0    60   ~ 0
 SDA
 Wire Wire Line
-	10300 1700 10525 1700
-Text Label 10525 1700 0    60   ~ 0
+	10275 2900 10500 2900
+Text Label 10500 2900 0    60   ~ 0
 SCL
 Wire Wire Line
 	3575 6375 2850 6375
@@ -78,7 +78,7 @@ Wire Wire Line
 Wire Wire Line
 	3325 6275 3325 6125
 Text Label 3325 6125 2    60   ~ 0
-INCR_PIN6
+INCR_PIN10
 Wire Wire Line
 	3575 6475 3325 6475
 Wire Wire Line
@@ -162,7 +162,7 @@ Wire Wire Line
 Wire Wire Line
 	1325 4125 2275 4125
 Wire Wire Line
-	1325 4225 2275 4225
+	1325 4225 1375 4225
 Text Label 3025 2750 0    60   ~ 0
 IND_PARALLEL
 Text Label 3025 3225 0    60   ~ 0
@@ -184,8 +184,8 @@ IND_SERIES
 Text Label 1550 4425 0    60   ~ 0
 CL_BAR_PIN2
 Wire Wire Line
-	8600 1500 7825 1500
-Text Label 7825 1500 0    60   ~ 0
+	8575 2700 7800 2700
+Text Label 7800 2700 0    60   ~ 0
 CL_BAR_PIN2
 Text Notes 2550 4475 0    63   ~ 0
 DPDT:\nUP1\nDOWN1\nIN1\nIN2\nUP2\nDOWN2
@@ -201,33 +201,33 @@ Connection ~ 9550 4800
 Text Label 10400 4800 2    60   ~ 0
 RELAY_PIN3
 Wire Wire Line
-	8600 1600 7825 1600
-Text Label 7825 1600 0    60   ~ 0
+	8575 2800 7800 2800
+Text Label 7800 2800 0    60   ~ 0
 RELAY_PIN3
 Wire Wire Line
-	8600 1900 7825 1900
-Text Label 7825 1900 0    60   ~ 0
-INCR_PIN6
-Text Label 7825 1700 0    60   ~ 0
+	8575 3400 7800 3400
+Text Label 7800 3500 0    60   ~ 0
+INCR_PIN10
+Text Label 7800 2900 0    60   ~ 0
 DECR_PIN4
 Wire Wire Line
-	8600 1700 7825 1700
+	8575 2900 7800 2900
 Connection ~ 7125 3700
 Wire Wire Line
 	7125 4175 7125 4425
 Text Label 7125 4425 0    60   ~ 0
 OSC_SIG_PIN5
 Wire Wire Line
-	8600 1800 7825 1800
-Text Label 7825 1800 0    60   ~ 0
+	8575 3000 7800 3000
+Text Label 7800 3000 0    60   ~ 0
 OSC_SIG_PIN5
 Wire Wire Line
-	8600 2000 7825 2000
-Text Label 7825 2000 0    60   ~ 0
+	8575 3200 7800 3200
+Text Label 7800 3200 0    60   ~ 0
 CAL_LK_PIN7
 Wire Wire Line
-	8600 2100 7825 2100
-Text Label 7825 2100 0    60   ~ 0
+	8575 3300 7800 3300
+Text Label 7800 3300 0    60   ~ 0
 CAL_ERASE_PIN8
 Wire Wire Line
 	5600 5950 4825 5950
@@ -262,8 +262,8 @@ Wire Wire Line
 	2300 1450 2300 1575
 Connection ~ 2300 1450
 Wire Wire Line
-	10300 1300 10525 1300
-Text Label 10525 1300 0    60   ~ 0
+	10275 2500 10500 2500
+Text Label 10500 2500 0    60   ~ 0
 RESET_PIN
 Wire Wire Line
 	4825 7150 5625 7150
@@ -273,24 +273,22 @@ Wire Wire Line
 	5625 7250 4825 7250
 Text Label 4825 7250 0    60   ~ 0
 GND
-NoConn ~ 8600 1100
-NoConn ~ 8600 1200
-NoConn ~ 8600 1300
-NoConn ~ 8600 1400
-NoConn ~ 8600 2200
-NoConn ~ 8600 2300
-NoConn ~ 8600 2400
-NoConn ~ 8600 2500
-NoConn ~ 10300 2500
-NoConn ~ 10300 2400
-NoConn ~ 10300 2300
-NoConn ~ 10300 2200
-NoConn ~ 10300 2100
-NoConn ~ 10300 2000
-NoConn ~ 10300 1900
-NoConn ~ 10300 1500
-NoConn ~ 10300 1600
-Text Notes 9050 1000 0    60   ~ 0
+NoConn ~ 8575 2300
+NoConn ~ 8575 2400
+NoConn ~ 8575 2500
+NoConn ~ 8575 2600
+NoConn ~ 8575 3600
+NoConn ~ 8575 3700
+NoConn ~ 10275 3700
+NoConn ~ 10275 3600
+NoConn ~ 10275 3500
+NoConn ~ 10275 3400
+NoConn ~ 10275 3300
+NoConn ~ 10275 3200
+NoConn ~ 10275 3100
+NoConn ~ 10275 2700
+NoConn ~ 10275 2800
+Text Notes 9025 2200 0    60   ~ 0
 Arduino Nano\nPin Mappings:
 Wire Wire Line
 	6275 2550 6275 2350
@@ -392,17 +390,6 @@ F 3 "~" H 3775 6375 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Connector_Generic:Conn_01x04 J_OLED1
-U 1 1 5B972605
-P 1825 6250
-F 0 "J_OLED1" H 1905 6242 50  0000 L CNN
-F 1 "Conn_01x04" H 1905 6151 50  0000 L CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical" H 1825 6250 50  0001 C CNN
-F 3 "~" H 1825 6250 50  0001 C CNN
-	1    1825 6250
-	1    0    0    -1  
-$EndComp
-$Comp
 L Connector_Generic:Conn_01x06 J_LCSELECTSPDT1
 U 1 1 5B972818
 P 2475 4125
@@ -416,23 +403,23 @@ $EndComp
 $Comp
 L Connector_Generic:Conn_01x15 J_NANOTX1
 U 1 1 5B972B1E
-P 8800 1800
-F 0 "J_NANOTX1" H 8550 2775 50  0000 L CNN
-F 1 "Conn_01x15" H 8550 2675 50  0000 L CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x15_P2.54mm_Vertical" H 8800 1800 50  0001 C CNN
-F 3 "~" H 8800 1800 50  0001 C CNN
-	1    8800 1800
+P 8775 3000
+F 0 "J_NANOTX1" H 8525 3975 50  0000 L CNN
+F 1 "Conn_01x15" H 8525 3875 50  0000 L CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x15_P2.54mm_Vertical" H 8775 3000 50  0001 C CNN
+F 3 "~" H 8775 3000 50  0001 C CNN
+	1    8775 3000
 	1    0    0    -1  
 $EndComp
 $Comp
 L Connector_Generic:Conn_01x15 J_NANOVIN1
 U 1 1 5B972BA3
-P 10100 1800
-F 0 "J_NANOVIN1" H 10100 2775 50  0000 C CNN
-F 1 "Conn_01x15" H 10100 2675 50  0000 C CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x15_P2.54mm_Vertical" H 10100 1800 50  0001 C CNN
-F 3 "~" H 10100 1800 50  0001 C CNN
-	1    10100 1800
+P 10075 3000
+F 0 "J_NANOVIN1" H 10075 3975 50  0000 C CNN
+F 1 "Conn_01x15" H 10075 3875 50  0000 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x15_P2.54mm_Vertical" H 10075 3000 50  0001 C CNN
+F 3 "~" H 10075 3000 50  0001 C CNN
+	1    10075 3000
 	-1   0    0    -1  
 $EndComp
 $Comp
@@ -631,124 +618,33 @@ Wire Wire Line
 	8850 5775 8850 5850
 Wire Wire Line
 	8950 5775 8950 5850
-$Comp
-L Connector_Generic:Conn_01x12 J_IICMUX_SC7
-U 1 1 5B999C08
-P 10100 3500
-F 0 "J_IICMUX_SC7" H 10020 4217 50  0000 C CNN
-F 1 "Conn_01x12" H 10020 4126 50  0000 C CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x12_P2.54mm_Vertical" H 10100 3500 50  0001 C CNN
-F 3 "~" H 10100 3500 50  0001 C CNN
-	1    10100 3500
-	-1   0    0    -1  
-$EndComp
-$Comp
-L Connector_Generic:Conn_01x12 J_IICMUX_VIN1
-U 1 1 5B9A71AD
-P 8800 3500
-F 0 "J_IICMUX_VIN1" H 8475 4225 50  0000 L CNN
-F 1 "Conn_01x12" H 8525 4125 50  0000 L CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x12_P2.54mm_Vertical" H 8800 3500 50  0001 C CNN
-F 3 "~" H 8800 3500 50  0001 C CNN
-	1    8800 3500
-	1    0    0    -1  
-$EndComp
-Text Notes 8900 4125 0    63   ~ 0
-VIN\nGND\nSDA\nSCL\nRST\nA0\nA1\nA2\nSD0\nSC0\nSD1\nSC1
-Text Notes 9800 4125 0    63   ~ 0
-SC7\nSD7\nSC6\nSD6\nSC5\nSD5\nSC4\nSD4\nSC3\nSD3\nSC2\nSD2
-Text Notes 9125 2925 0    63   ~ 0
-TCA9548A\nPin Mappings:
 Wire Wire Line
-	8600 3000 8250 3000
-Text Label 8250 3000 0    63   ~ 0
-5V
+	1375 4225 1375 4575
+Connection ~ 1375 4225
 Wire Wire Line
-	8600 3200 8250 3200
-Text Label 8250 3200 0    63   ~ 0
-SDA
-Wire Wire Line
-	8600 3300 8250 3300
-Text Label 8250 3300 0    63   ~ 0
-SCL
-Wire Wire Line
-	8600 3400 8250 3400
-Text Label 8250 3400 0    63   ~ 0
-5V
-Text Label 7850 4000 1    63   ~ 0
+	1375 4225 2275 4225
+Text Label 1375 4575 1    60   ~ 0
 GND
 Wire Wire Line
-	7850 3500 7850 3600
-Wire Wire Line
-	7850 3500 8600 3500
-Wire Wire Line
-	8600 3100 7850 3100
-Wire Wire Line
-	7850 3100 7850 3500
-Connection ~ 7850 3500
-Wire Wire Line
-	8600 3600 7850 3600
-Connection ~ 7850 3600
-Wire Wire Line
-	7850 3600 7850 3700
-Wire Wire Line
-	8600 3700 7850 3700
-Connection ~ 7850 3700
-Wire Wire Line
-	7850 3700 7850 4000
-Wire Wire Line
-	1625 6750 1375 6750
-Text Label 1375 6750 0    60   ~ 0
-SDA1
-Wire Wire Line
-	1625 6850 1375 6850
-Text Label 1375 6850 0    60   ~ 0
-SCL1
-Wire Wire Line
-	1625 6950 1375 6950
-Text Label 1375 6950 0    60   ~ 0
-GND
-Wire Wire Line
-	1625 7050 1375 7050
-Text Label 1375 7050 0    60   ~ 0
-5V
+	8575 3500 7800 3500
+Text Label 7800 3400 0    60   ~ 0
+SRST
 $Comp
-L Connector_Generic:Conn_01x04 J_OLED2
-U 1 1 5B9E0177
-P 1825 6850
-F 0 "J_OLED2" H 1905 6842 50  0000 L CNN
-F 1 "Conn_01x04" H 1905 6751 50  0000 L CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical" H 1825 6850 50  0001 C CNN
-F 3 "~" H 1825 6850 50  0001 C CNN
-	1    1825 6850
+L Connector_Generic:Conn_01x05 J_SSD1309_OLED1
+U 1 1 5BA3D26B
+P 1825 6350
+F 0 "J_SSD1309_OLED1" H 1905 6392 50  0000 L CNN
+F 1 "Conn_01x05" H 1905 6303 50  0000 L CNN
+F 2 "" H 1825 6350 50  0001 C CNN
+F 3 "~" H 1825 6350 50  0001 C CNN
+	1    1825 6350
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	8600 3800 8100 3800
-Wire Wire Line
-	8600 3900 8100 3900
-Wire Wire Line
-	8600 4000 8100 4000
-Wire Wire Line
-	8600 4100 8100 4100
-Text Label 8100 3800 0    63   ~ 0
-SDA0
-Text Label 8100 3900 0    63   ~ 0
-SCL0
-Text Label 8100 4000 0    63   ~ 0
-SDA1
-Text Label 8100 4100 0    63   ~ 0
-SCL1
-NoConn ~ 10300 3000
-NoConn ~ 10300 3100
-NoConn ~ 10300 3200
-NoConn ~ 10300 3300
-NoConn ~ 10300 3400
-NoConn ~ 10300 3500
-NoConn ~ 10300 3600
-NoConn ~ 10300 3700
-NoConn ~ 10300 3800
-NoConn ~ 10300 3900
-NoConn ~ 10300 4000
-NoConn ~ 10300 4100
+	1625 6550 1375 6550
+Text Label 1375 6550 0    60   ~ 0
+SRST
+Text Notes 1750 6875 0    60   ~ 0
+2.42" SSD1309\nwww.diymore.cc
+NoConn ~ 8575 3100
 $EndSCHEMATC

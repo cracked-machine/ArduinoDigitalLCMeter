@@ -1,4 +1,4 @@
-/* Arduino_LC_meter_sketch.ino
+ /* Arduino_LC_meter_sketch.ino
    a sketch for Arduino based LC meter firmware based on an
    assembly language program written for the PIC-based
    digital LC meter design published in the May 2008 issue
@@ -27,15 +27,13 @@ extern "C" {
 
 
 #include <Wire.h>
-//#include <LiquidCrystal_I2C.h>
-//LiquidCrystal_I2C lcd(0x27,16,2);   // set the LCD address to 0x27,
-                                    // with 2 x 16 char lines   
+  
 
 // 3rd party libs
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
-#define OLED_RESET 4
+#define OLED_RESET 9
 Adafruit_SSD1306 display(OLED_RESET);
                                     
 #include <EEPROM.h>               // include the EEPROM library
@@ -58,7 +56,7 @@ const int CLbarPin = 2;   // digital IO pin 2 for C/L-bar sensing
 const int RelayPin = 3;   // digital IO pin 3 for driving RLY1
 const int DecrPin = 4;    // digital IO pin 4 for sensing DECR pos of S3
 const int OscSigPin = 5;  // digital IO pin 5 for input of oscillator signal
-const int IncrPin = 6;    // digital IO pin 6 for sensing INCR pos of S3
+const int IncrPin = 10;    // digital IO pin 6 for sensing INCR pos of S3 // was pd6
 const int CalLkPin = 7;   // digital IO pin 7 for sensing CAL link LK1
 const int CalErase = 8;   // jumper to clear eeprom calibration settings for factory reset *CJS
 
@@ -69,7 +67,7 @@ float LXval;     // calculated value for Lx (in H)
 float F1sqrd;    // calc value for Freq1 squared (as a float)
 float F2sqrd;    // calc value for Freq2 squared (as a float)
 float F3sqrd;    // calc value for Freq3 squared (as a float)
-float CF = 1.0;  // calibration factor, set by nudging via S3   
+float CF = 1.000;  // calibration factor, set by nudging via S3   
 
 long Fcount;   // raw frequency count figure (from GetFrequency function)
 long Freq1;    // measured Freq1 in Hz (L1 & C1 only)
@@ -77,6 +75,8 @@ long Freq2;    // measured Freq2 in Hz (L1 & (C1 + C2))
 long Freq3;    // measured Freq3 in Hz (C1+Cx/L1 or C1/L1+Lx)
 
 byte MTorNot = 0;   // flag: 0 = EEPROM addresses empty (== 255)
+
+byte displayAddress = 0x0;
 
 void tcaselect(uint8_t i) {
   if (i > 7) return;
@@ -86,13 +86,19 @@ void tcaselect(uint8_t i) {
   Wire.endTransmission();  
 }
 
+
+
 // ====================================================================
 // setup function begins here
 // ====================================================================
 void setup()
 {
+  
   Wire.begin();
   Serial.begin(9600);
+  
+
+ 
   pinMode(CLbarPin, INPUT_PULLUP);    // make pin 2 an input with pullup
   pinMode(RelayPin, OUTPUT);          // but make pin3 an output
   digitalWrite(RelayPin, LOW);        // and initialise it to LOW
@@ -102,8 +108,9 @@ void setup()
   pinMode(CalLkPin, INPUT_PULLUP);    // and make pin 7 an input with pullup
   pinMode(CalErase, INPUT_PULLUP);    // make pin 8 an input with pullup *CJS
 
-  tcaselect(0);
+
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);  // initialize with the I2C addr 0x3C (for the 128x32)
+   Serial.println("Silicon Chip");
   display.display();
   delay(100);
   
@@ -111,9 +118,6 @@ void setup()
   lcd_setText(1,1);
   
   
-  lcd_printLn("Silicon Chip");
-  
-  Serial.println("Silicon Chip");
   
   lcd_printLn("Digital LC Meter");
   Serial.println("Digital LC Meter");
@@ -247,7 +251,7 @@ void loop()
   else    // CLbarPin == LOW, so we must be measuring an L
   {
     LXval = L1val * CF * (float(F1sqrd/F3sqrd) - 1.0); // work it out
-    Serial.println(CF);
+    Serial.println(CF,3);
     if(LXval < 1.0e-3)     // if LXval < 1mH
     {
       float LXuH = LXval * uHmult; // convert to uH 
@@ -287,15 +291,19 @@ void loop()
   if(digitalRead(CalLkPin) == LOW)  // if LK1 is fitted, check S3
   {               // because it looks like some nudging is needed
     Serial.println("Man Cal Enabled");
+    lcd_print("Man Cal Enabled: ");
+    lcd_printLn(String(CF));
     if(digitalRead(IncrPin) == LOW) // if it's increment,
     {
       Serial.println("Calibrate Inc.");
+     
       CF = CF * 1.005;   // nudge up CF by 0.5%
       EEPROM.update(0, CF); // then resave new CF in EEPROM 
     }
     if(digitalRead(DecrPin) == LOW) // or if it's decrement,
     {
       Serial.println("Calibrate Dec.");
+     
       CF = CF * 0.995;  // nudge CF down by 0.5%
       EEPROM.update(0, CF); // then resave new CF in EEPROM 
     }
