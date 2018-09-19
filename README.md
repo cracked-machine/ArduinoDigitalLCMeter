@@ -1,5 +1,5 @@
 # ArduinoDigitalLCMeter
-ArduinoNano-based Digital LC Meter with OLED display
+ArduinoNano-based Digital LC Meter with 2.42" OLED display
 
 ### TODO
 
