@@ -1,0 +1,641 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="D">
+  <design>
+    <source>H:\Workspace\ElectronicsProjects\TestAndMeasurement\ArduinoDigitalLCMeter\Hardware\Digital_LC_Meter.sch</source>
+    <date>20-09-2018 12:40:35 AM</date>
+    <tool>Eeschema (5.0.0)</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>Digital_LC_Meter.sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="J_PWR1">
+      <value>Conn_01x02</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Connector_Generic" part="Conn_01x02" description="Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B972046</tstamp>
+    </comp>
+    <comp ref="J_INPUT1">
+      <value>Conn_01x02</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Connector_Generic" part="Conn_01x02" description="Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B9720BC</tstamp>
+    </comp>
+    <comp ref="J_CALJUMPER1">
+      <value>Conn_01x02</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Connector_Generic" part="Conn_01x02" description="Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B972118</tstamp>
+    </comp>
+    <comp ref="J_ERASEBTN1">
+      <value>Conn_01x02</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Connector_Generic" part="Conn_01x02" description="Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B97221A</tstamp>
+    </comp>
+    <comp ref="J_RESETBTN1">
+      <value>Conn_01x02</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Connector_Generic" part="Conn_01x02" description="Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B97228E</tstamp>
+    </comp>
+    <comp ref="J_NUDGEBTN1">
+      <value>Conn_01x03</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Connector_Generic" part="Conn_01x03" description="Generic connector, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B972482</tstamp>
+    </comp>
+    <comp ref="J_LCSELECTSPDT1">
+      <value>Conn_01x06</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Connector_Generic" part="Conn_01x06" description="Generic connector, single row, 01x06, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B972818</tstamp>
+    </comp>
+    <comp ref="J_NANOTX1">
+      <value>Conn_01x15</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x15_P2.54mm_Vertical</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Connector_Generic" part="Conn_01x15" description="Generic connector, single row, 01x15, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B972B1E</tstamp>
+    </comp>
+    <comp ref="J_NANOVIN1">
+      <value>Conn_01x15</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x15_P2.54mm_Vertical</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Connector_Generic" part="Conn_01x15" description="Generic connector, single row, 01x15, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B972BA3</tstamp>
+    </comp>
+    <comp ref="R_BIAS3">
+      <value>4K7</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B972C8E</tstamp>
+    </comp>
+    <comp ref="R_BIAS1">
+      <value>100K</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B972D66</tstamp>
+    </comp>
+    <comp ref="R_BIAS2">
+      <value>100K</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B972DFC</tstamp>
+    </comp>
+    <comp ref="R_SIG1">
+      <value>6K8</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B972E6E</tstamp>
+    </comp>
+    <comp ref="R_OSC1">
+      <value>47K</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B972EF1</tstamp>
+    </comp>
+    <comp ref="C_MICA2">
+      <value>1nF</value>
+      <footprint>Capacitor_THT:C_Rect_L7.0mm_W2.0mm_P5.00mm</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B972FE8</tstamp>
+    </comp>
+    <comp ref="C_MICA1">
+      <value>1nF</value>
+      <footprint>Capacitor_THT:C_Rect_L7.0mm_W2.0mm_P5.00mm</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B97310A</tstamp>
+    </comp>
+    <comp ref="C_BP1">
+      <value>100nF</value>
+      <footprint>Capacitor_THT:C_Rect_L7.0mm_W2.0mm_P5.00mm</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B973184</tstamp>
+    </comp>
+    <comp ref="C_COUP1">
+      <value>10uF</value>
+      <footprint>Capacitor_THT:CP_Radial_D5.0mm_P2.50mm</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="CP" description="Polarised capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B9733EB</tstamp>
+    </comp>
+    <comp ref="C_OSC1">
+      <value>10uF</value>
+      <footprint>Capacitor_THT:CP_Radial_D5.0mm_P2.50mm</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="CP" description="Polarised capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B97357D</tstamp>
+    </comp>
+    <comp ref="R3">
+      <value>100K</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B9782E4</tstamp>
+    </comp>
+    <comp ref="U_OSC1">
+      <value>LM311</value>
+      <footprint>Package_DIP:DIP-8_W7.62mm_Socket</footprint>
+      <datasheet>http://www.ti.com/lit/ds/symlink/lm311.pdf</datasheet>
+      <libsource lib="Comparator" part="LM311" description="Voltage Comparator, DIP-8/SOIC-8/SSOP-8"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B978CA1</tstamp>
+    </comp>
+    <comp ref="L1">
+      <value>100uH</value>
+      <footprint>Inductor_THT:L_Radial_D7.8mm_P5.00mm_Fastron_07HCP</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="L_Core_Ferrite_Small" description="Inductor with ferrite core, small symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B99B94D</tstamp>
+    </comp>
+    <comp ref="U_RLY1">
+      <value>TE_ReedRelay_V23100V4xxxA010</value>
+      <footprint>TE_Reed_Relay_V23100V4:TE_ReedRelay_V23100V4</footprint>
+      <libsource lib="TE_ReedRelay_V23100V4" part="TE_ReedRelay_V23100V4xxxA010" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B996138</tstamp>
+    </comp>
+    <comp ref="J_DK1">
+      <value>Conn_01x01</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Connector_Generic" part="Conn_01x01" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B9A08C2</tstamp>
+    </comp>
+    <comp ref="J_DA1">
+      <value>Conn_01x01</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Connector_Generic" part="Conn_01x01" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B9A3151</tstamp>
+    </comp>
+    <comp ref="J_SSD1309_OLED1">
+      <value>Conn_01x05</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Vertical</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Connector_Generic" part="Conn_01x05" description="Generic connector, single row, 01x05, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5BA3D26B</tstamp>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="Comparator" part="LM311">
+      <aliases>
+        <alias>LT1011</alias>
+      </aliases>
+      <description>Voltage Comparator, DIP-8/SOIC-8/SSOP-8</description>
+      <docs>http://www.ti.com/lit/ds/symlink/lm311.pdf</docs>
+      <footprints>
+        <fp>SOIC*3.9x4.9mm*P1.27mm*</fp>
+        <fp>DIP*W7.62mm*</fp>
+        <fp>TSSOP*4.4x3mm*P0.65mm*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">LM311</field>
+      </fields>
+      <pins>
+        <pin num="1" name="GND" type="openEm"/>
+        <pin num="2" name="+" type="input"/>
+        <pin num="3" name="-" type="input"/>
+        <pin num="4" name="V-" type="power_in"/>
+        <pin num="5" name="BAL" type="passive"/>
+        <pin num="6" name="STRB" type="passive"/>
+        <pin num="7" name="~" type="openCol"/>
+        <pin num="8" name="V+" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector_Generic" part="Conn_01x01">
+      <description>Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x01</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector_Generic" part="Conn_01x02">
+      <description>Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x02</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector_Generic" part="Conn_01x03">
+      <description>Generic connector, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x03</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector_Generic" part="Conn_01x05">
+      <description>Generic connector, single row, 01x05, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x05</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+        <pin num="4" name="Pin_4" type="passive"/>
+        <pin num="5" name="Pin_5" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector_Generic" part="Conn_01x06">
+      <description>Generic connector, single row, 01x06, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x06</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+        <pin num="4" name="Pin_4" type="passive"/>
+        <pin num="5" name="Pin_5" type="passive"/>
+        <pin num="6" name="Pin_6" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector_Generic" part="Conn_01x15">
+      <description>Generic connector, single row, 01x15, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x15</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+        <pin num="4" name="Pin_4" type="passive"/>
+        <pin num="5" name="Pin_5" type="passive"/>
+        <pin num="6" name="Pin_6" type="passive"/>
+        <pin num="7" name="Pin_7" type="passive"/>
+        <pin num="8" name="Pin_8" type="passive"/>
+        <pin num="9" name="Pin_9" type="passive"/>
+        <pin num="10" name="Pin_10" type="passive"/>
+        <pin num="11" name="Pin_11" type="passive"/>
+        <pin num="12" name="Pin_12" type="passive"/>
+        <pin num="13" name="Pin_13" type="passive"/>
+        <pin num="14" name="Pin_14" type="passive"/>
+        <pin num="15" name="Pin_15" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="C">
+      <description>Unpolarized capacitor</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>C_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">C</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="CP">
+      <description>Polarised capacitor</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>CP_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">CP</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="L_Core_Ferrite_Small">
+      <description>Inductor with ferrite core, small symbol</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Choke_*</fp>
+        <fp>*Coil*</fp>
+        <fp>Inductor_*</fp>
+        <fp>L_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">L</field>
+        <field name="Value">L_Core_Ferrite_Small</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="R">
+      <description>Resistor</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>R_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">R</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="TE_ReedRelay_V23100V4" part="TE_ReedRelay_V23100V4xxxA010">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">TE_ReedRelay_V23100V4xxxA010</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="NotConnected"/>
+        <pin num="6" name="~" type="passive"/>
+        <pin num="7" name="~" type="passive"/>
+        <pin num="8" name="~" type="passive"/>
+        <pin num="9" name="~" type="passive"/>
+        <pin num="13" name="~" type="passive"/>
+        <pin num="14" name="~" type="passive"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="Comparator">
+      <uri>H:\Programs\KiCad\share\kicad\library/Comparator.lib</uri>
+    </library>
+    <library logical="Connector_Generic">
+      <uri>H:\Programs\KiCad\share\kicad\library/Connector_Generic.lib</uri>
+    </library>
+    <library logical="Device">
+      <uri>H:\Programs\KiCad\share\kicad\library/Device.lib</uri>
+    </library>
+    <library logical="TE_ReedRelay_V23100V4">
+      <uri>H:/Workspace/ElectronicsProjects/TestAndMeasurement/ArduinoDigitalLCMeter/Hardware/lib/TE_ReedRelay_V23100V4.lib</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="Net-(J_NANOTX1-Pad4)">
+      <node ref="J_NANOTX1" pin="4"/>
+    </net>
+    <net code="2" name="Net-(J_NANOTX1-Pad3)">
+      <node ref="J_NANOTX1" pin="3"/>
+    </net>
+    <net code="3" name="Net-(J_NANOTX1-Pad2)">
+      <node ref="J_NANOTX1" pin="2"/>
+    </net>
+    <net code="4" name="Net-(J_NANOTX1-Pad15)">
+      <node ref="J_NANOTX1" pin="15"/>
+    </net>
+    <net code="5" name="Net-(J_NANOTX1-Pad14)">
+      <node ref="J_NANOTX1" pin="14"/>
+    </net>
+    <net code="6" name="Net-(J_NANOTX1-Pad1)">
+      <node ref="J_NANOTX1" pin="1"/>
+    </net>
+    <net code="7" name="/GND">
+      <node ref="C_MICA1" pin="1"/>
+      <node ref="C_BP1" pin="1"/>
+      <node ref="U_RLY1" pin="9"/>
+      <node ref="R_BIAS2" pin="2"/>
+      <node ref="U_OSC1" pin="4"/>
+      <node ref="U_OSC1" pin="1"/>
+      <node ref="C_OSC1" pin="2"/>
+      <node ref="U_RLY1" pin="13"/>
+      <node ref="J_SSD1309_OLED1" pin="2"/>
+      <node ref="U_RLY1" pin="8"/>
+      <node ref="J_DA1" pin="1"/>
+      <node ref="J_PWR1" pin="2"/>
+      <node ref="J_LCSELECTSPDT1" pin="4"/>
+      <node ref="J_ERASEBTN1" pin="2"/>
+      <node ref="J_NUDGEBTN1" pin="2"/>
+      <node ref="J_INPUT1" pin="2"/>
+      <node ref="J_CALJUMPER1" pin="2"/>
+      <node ref="J_RESETBTN1" pin="2"/>
+      <node ref="J_NANOVIN1" pin="2"/>
+    </net>
+    <net code="8" name="/IND_SERIES">
+      <node ref="L1" pin="1"/>
+      <node ref="J_LCSELECTSPDT1" pin="5"/>
+      <node ref="J_LCSELECTSPDT1" pin="2"/>
+    </net>
+    <net code="9" name="Net-(J_NANOVIN1-Pad13)">
+      <node ref="J_NANOVIN1" pin="13"/>
+    </net>
+    <net code="10" name="Net-(J_NANOVIN1-Pad6)">
+      <node ref="J_NANOVIN1" pin="6"/>
+    </net>
+    <net code="11" name="Net-(J_NANOVIN1-Pad5)">
+      <node ref="J_NANOVIN1" pin="5"/>
+    </net>
+    <net code="12" name="Net-(J_NANOVIN1-Pad15)">
+      <node ref="J_NANOVIN1" pin="15"/>
+    </net>
+    <net code="13" name="Net-(J_NANOVIN1-Pad14)">
+      <node ref="J_NANOVIN1" pin="14"/>
+    </net>
+    <net code="14" name="Net-(J_NANOVIN1-Pad12)">
+      <node ref="J_NANOVIN1" pin="12"/>
+    </net>
+    <net code="15" name="Net-(J_NANOVIN1-Pad11)">
+      <node ref="J_NANOVIN1" pin="11"/>
+    </net>
+    <net code="16" name="Net-(J_NANOVIN1-Pad10)">
+      <node ref="J_NANOVIN1" pin="10"/>
+    </net>
+    <net code="17" name="Net-(J_NANOTX1-Pad9)">
+      <node ref="J_NANOTX1" pin="9"/>
+    </net>
+    <net code="18" name="Net-(J_NANOVIN1-Pad9)">
+      <node ref="J_NANOVIN1" pin="9"/>
+    </net>
+    <net code="19" name="Net-(J_INPUT1-Pad1)">
+      <node ref="J_LCSELECTSPDT1" pin="3"/>
+      <node ref="J_INPUT1" pin="1"/>
+    </net>
+    <net code="20" name="Net-(U_RLY1-Pad14)">
+      <node ref="U_RLY1" pin="14"/>
+    </net>
+    <net code="21" name="Net-(U_RLY1-Pad2)">
+      <node ref="U_RLY1" pin="2"/>
+    </net>
+    <net code="22" name="Net-(U_RLY1-Pad7)">
+      <node ref="U_RLY1" pin="7"/>
+    </net>
+    <net code="23" name="/SRST">
+      <node ref="J_NANOTX1" pin="12"/>
+      <node ref="J_SSD1309_OLED1" pin="5"/>
+    </net>
+    <net code="24" name="/SCL">
+      <node ref="J_SSD1309_OLED1" pin="4"/>
+      <node ref="J_NANOVIN1" pin="7"/>
+    </net>
+    <net code="25" name="/SDA">
+      <node ref="J_SSD1309_OLED1" pin="3"/>
+      <node ref="J_NANOVIN1" pin="8"/>
+    </net>
+    <net code="26" name="Net-(C_MICA2-Pad1)">
+      <node ref="U_RLY1" pin="1"/>
+      <node ref="C_MICA2" pin="1"/>
+    </net>
+    <net code="27" name="Net-(C_OSC1-Pad1)">
+      <node ref="U_OSC1" pin="3"/>
+      <node ref="C_OSC1" pin="1"/>
+      <node ref="R_OSC1" pin="2"/>
+    </net>
+    <net code="28" name="Net-(U_OSC1-Pad5)">
+      <node ref="U_OSC1" pin="6"/>
+      <node ref="U_OSC1" pin="5"/>
+    </net>
+    <net code="29" name="Net-(C_COUP1-Pad1)">
+      <node ref="R_BIAS1" pin="2"/>
+      <node ref="R_BIAS2" pin="1"/>
+      <node ref="C_COUP1" pin="1"/>
+      <node ref="R3" pin="2"/>
+      <node ref="U_OSC1" pin="2"/>
+    </net>
+    <net code="30" name="Net-(R3-Pad1)">
+      <node ref="U_OSC1" pin="7"/>
+      <node ref="R3" pin="1"/>
+      <node ref="R_BIAS3" pin="2"/>
+      <node ref="R_SIG1" pin="1"/>
+      <node ref="R_OSC1" pin="1"/>
+    </net>
+    <net code="31" name="/5V">
+      <node ref="J_NANOVIN1" pin="4"/>
+      <node ref="U_OSC1" pin="8"/>
+      <node ref="J_SSD1309_OLED1" pin="1"/>
+      <node ref="R_BIAS3" pin="1"/>
+      <node ref="R_BIAS1" pin="1"/>
+    </net>
+    <net code="32" name="/VIN">
+      <node ref="C_BP1" pin="2"/>
+      <node ref="J_NANOVIN1" pin="1"/>
+      <node ref="J_PWR1" pin="1"/>
+    </net>
+    <net code="33" name="/INCR_PIN10">
+      <node ref="J_NANOTX1" pin="13"/>
+      <node ref="J_NUDGEBTN1" pin="1"/>
+    </net>
+    <net code="34" name="/DECR_PIN4">
+      <node ref="J_NANOTX1" pin="7"/>
+      <node ref="J_NUDGEBTN1" pin="3"/>
+    </net>
+    <net code="35" name="/CAL_ERASE_PIN8">
+      <node ref="J_NANOTX1" pin="11"/>
+      <node ref="J_ERASEBTN1" pin="1"/>
+    </net>
+    <net code="36" name="/CAL_LK_PIN7">
+      <node ref="J_CALJUMPER1" pin="1"/>
+      <node ref="J_NANOTX1" pin="10"/>
+    </net>
+    <net code="37" name="/RESET_PIN">
+      <node ref="J_RESETBTN1" pin="1"/>
+      <node ref="J_NANOVIN1" pin="3"/>
+    </net>
+    <net code="38" name="/CL_BAR_PIN2">
+      <node ref="J_LCSELECTSPDT1" pin="6"/>
+      <node ref="J_NANOTX1" pin="5"/>
+    </net>
+    <net code="39" name="/IND_PARALLEL">
+      <node ref="C_COUP1" pin="2"/>
+      <node ref="J_LCSELECTSPDT1" pin="1"/>
+      <node ref="C_MICA1" pin="2"/>
+      <node ref="C_MICA2" pin="2"/>
+      <node ref="L1" pin="2"/>
+    </net>
+    <net code="40" name="/OSC_SIG_PIN5">
+      <node ref="J_NANOTX1" pin="8"/>
+      <node ref="R_SIG1" pin="2"/>
+    </net>
+    <net code="41" name="/RELAY_PIN3">
+      <node ref="J_DK1" pin="1"/>
+      <node ref="U_RLY1" pin="6"/>
+      <node ref="J_NANOTX1" pin="6"/>
+    </net>
+  </nets>
+</export>
