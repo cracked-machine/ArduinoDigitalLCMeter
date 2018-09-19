@@ -1,18 +1,6 @@
 # ArduinoDigitalLCMeter
 ArduinoNano-based Digital LC Meter with OLED display
 
-## Schematic
-
-![Schematic](https://github.com/cracked-machine/ArduinoDigitalLCMeter/blob/master/Hardware/docs/Digital_LC_Meter.pdf)
-
-## Layout
-
-![Layout](https://github.com/cracked-machine/ArduinoDigitalLCMeter/blob/master/Hardware/docs/Digital_LC_Meter-brd.svg)
-
-## Front Panel
-
-![Front Panel](https://github.com/cracked-machine/ArduinoDigitalLCMeter/blob/master/FrontPanel/FrontPanelDrawing.svg)
-
 ## TODO
 
 - [x] Test design on breadboard with OLED display
@@ -23,3 +11,17 @@ ArduinoNano-based Digital LC Meter with OLED display
 - [x] Cut panel
 - [x] Assemble prototpye
 - [ ] Complete Firmware
+
+## Schematic
+
+https://github.com/cracked-machine/ArduinoDigitalLCMeter/blob/master/Hardware/docs/Digital_LC_Meter.pdf
+
+## Layout
+
+![Layout](https://github.com/cracked-machine/ArduinoDigitalLCMeter/blob/master/Hardware/docs/Digital_LC_Meter-brd.svg)
+
+## Front Panel
+
+![Front Panel](https://github.com/cracked-machine/ArduinoDigitalLCMeter/blob/master/FrontPanel/FrontPanelDrawing.svg)
+
+
