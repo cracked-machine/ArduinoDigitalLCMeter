@@ -17,17 +17,12 @@
    should need to be made is to change the address in line 21 below.
  */
 
- #include "Wire.h"
+#include <EnableInterrupt.h>
+#include <TimerOne.h>
+#include "Wire.h"
 extern "C" { 
 #include "utility/twi.h"  // from Wire library, so we can do bus scanning
 }
- 
-#define TCAADDR 0x70
- 
-
-
-#include <Wire.h>
-  
 
 // 3rd party libs
 #include <Adafruit_GFX.h>
@@ -76,29 +71,47 @@ long Freq3;    // measured Freq3 in Hz (C1+Cx/L1 or C1/L1+Lx)
 
 byte MTorNot = 0;   // flag: 0 = EEPROM addresses empty (== 255)
 
-byte displayAddress = 0x0;
 
-void tcaselect(uint8_t i) {
-  if (i > 7) return;
- 
-  Wire.beginTransmission(TCAADDR);
-  Wire.write(1 << i);
-  Wire.endTransmission();  
+
+void IncrementCalClBk() 
+{
+  if(digitalRead(CalLkPin) == LOW)  
+  {              
+    CF = CF * 1.005;   // nudge up CF by 0.5%
+    EEPROM.update(0, CF); // then resave new CF in EEPROM   
+  }
 }
 
+void DecrementCalClBk() 
+{
+  if(digitalRead(CalLkPin) == LOW) 
+  {    
+    CF = CF * 0.995;  // nudge CF down by 0.5%
+    EEPROM.update(0, CF); // then resave new CF in EEPROM  
+  }
+}
 
+void Test() 
+{
+  
+  lcd_reset();
+  lcd_setText(1,1);
+   
+  lcd_printLn("Digital LC Meter");
+}
 
 // ====================================================================
 // setup function begins here
 // ====================================================================
 void setup()
-{
-  
+{ 
   Wire.begin();
-  Serial.begin(9600);
   
+  enableInterrupt(4, DecrementCalClBk, CHANGE);
+  enableInterrupt(10, IncrementCalClBk, CHANGE);
 
  
+  
   pinMode(CLbarPin, INPUT_PULLUP);    // make pin 2 an input with pullup
   pinMode(RelayPin, OUTPUT);          // but make pin3 an output
   digitalWrite(RelayPin, LOW);        // and initialise it to LOW
@@ -110,38 +123,34 @@ void setup()
 
 
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);  // initialize with the I2C addr 0x3C (for the 128x32)
-   Serial.println("Silicon Chip");
   display.display();
+
+ 
+
+  
+  
   delay(100);
   
   lcd_reset();
   lcd_setText(1,1);
-  
-  
-  
+   
   lcd_printLn("Digital LC Meter");
-  Serial.println("Digital LC Meter");
-  delay(2000);            // then pause for 2 seconds
-  
-  lcd_reset();
-  
+ 
   if(digitalRead(CalErase) == LOW) 
-  {
-    
-    Serial.println("Factory Reset Selected!");
-    lcd_printLn("Factory Reset Selected!");
+  {   
+    lcd_printLn("Factory Reset!");
     
     // if pin set to GND factory reset the eeprom by setting non-zero values.
-    for (int i = 0 ; i < EEPROM.length() ; i++) {
+    for (int i = 0 ; i < EEPROM.length() ; i++) 
+    {
       EEPROM.write(i, 255);
     }
     delay(1000);
-    lcd_reset();
   }
   
   int i = 0;          // just a counter for the loop below
   // now check to see if CF is saved in EEPROM (addresses 0 - 3)
- for (i = 0; i < 4; i++)
+  for (i = 0; i < 4; i++)
   {
     if (EEPROM.read(i) != 255)
     {
@@ -157,46 +166,25 @@ void setup()
   {
     EEPROM.get(0, CF);  // otherwise retrieve saved CF from EEPROM
   }
- // now do a calibration
+  
+  if(digitalRead(CLbarPin) == LOW)
   {
-    
-    if(digitalRead(CLbarPin) == HIGH)
-    {
-      //lcd.print("S1 set for C: OK"); // S1 in 'C' position, so confirm
-      Serial.println("S1 set for C: OK");
-      lcd_printLn("S1 set for C: OK");
-    }
-    else
-    {
-      //lcd.print("Fit shorting bar"); // S1 in 'L' position, so signal
-      lcd_printLn("Set to CX and reset!");
-      while(1) 
-      {
-       // spin wheels while waiting for user reset       
-      }
-    }                                // need for shorting bar
-    delay(1000);
-    lcd_reset();
-    
-    //lcd.setCursor(0,1);               // now show "Now calibrating"
-    //lcd.print("Now calibrating");     // on second line (both cases)
-    
-    Serial.println("Now calibrating");
-    lcd_printLn("Now calibrating");
-    
-    FindC1andL1();    // now do calibration, to find F1, F2, C1 & L1
-    DispCalData();    // then display C1 & L1 (pausing for 3 secs)
-    //lcd.clear();
-    //lcd.print("Calibration done");
-    Serial.println("Calibration done");
-    lcd_printLn("Calibration done");
-    //lcd.setCursor(0,1);
-    //lcd.print("Ready to measure");
-    Serial.println("Ready to measure");
-    lcd_printLn("Ready to measure");
-    delay(1000);
-    
-  }
+    lcd_printLn("\nSet to CX mode \nand press reset!");
+    while(1)  { /* no go for callibration, idle */ }
+  }                               
+  
+  lcd_printLn("Starting calibration");
+  
+  FindC1andL1();    // now do calibration, to find F1, F2, C1 & L1
+  DispCalData();    // then display C1 & L1 (pausing for 3 secs)
+  
+  lcd_printLn("Calibration done");
+  
+  lcd_printLn("Ready to measure");
+  delay(2000);
+  
+
+  
 } // end of setup function
 
  // ===================================================================
@@ -205,23 +193,22 @@ void setup()
 void loop()
 {
   lcd_reset();
-  //lcd.clear();                // first clear screen, then
+ 
   GetFrequency();             // go get current osc frequency
   Freq3 = Fcount;             // and copy into Freq3
   float F3 = float(Freq3);    // then convert to a float
   F3sqrd = pow(F3, 2.0);      // so it can be squared
   String Cdisp;               // declare C display string
   String Ldisp;               // declare L display string
-  
+   
   if(digitalRead(CLbarPin) == HIGH)  // if we're measuring a C
   {
+    lcd_printLn("Capacitance Mode");
     CXval = C1val * CF * (float(F1sqrd/F3sqrd) - 1.0); // work it out
-    Serial.println(CF);
-   
+     
     if(CXval < 1.0e-9)     // if CXval < 1nF
     {
       float CXpF = CXval * pFmult;  // get equiv value in pF
-     // Cdisp = " Cx = ";  // then assemble top line string
       Cdisp += String(CXpF, 3);
       Cdisp += " pF";
     }
@@ -230,32 +217,30 @@ void loop()
       if(CXval < 1.0e-6)    // but check if it's less than 1uF
       {
         float CXnF = CXval * nFmult;  // if so, get equiv value in nF
-        //Cdisp = "Cx = ";   // then assemble top line string
         Cdisp += String(CXnF, 3);
         Cdisp += " nF";
       }
       else    // value must be 1uF or more
       {
         float CXuF = CXval * uFmult;  // so get equiv value in uF
-       // Cdisp = "Cx = ";  // then assemble top line string
         Cdisp += String(CXuF, 3);
         Cdisp += " uF";  
       }
     }
-    //lcd.print(Cdisp);  // now display the cap value string
+    // now display the cap value string
     lcd_setText(1,charSize);
-    Serial.println(Cdisp);
+    
     lcd_printLn(Cdisp);
     lcd_setText(1,1);
   }
   else    // CLbarPin == LOW, so we must be measuring an L
   {
+    lcd_printLn("Inductance Mode");
     LXval = L1val * CF * (float(F1sqrd/F3sqrd) - 1.0); // work it out
-    Serial.println(CF,3);
+  
     if(LXval < 1.0e-3)     // if LXval < 1mH
     {
       float LXuH = LXval * uHmult; // convert to uH 
-      //Ldisp = " Lx = "; // then assemble top line string
       Ldisp += String(LXuH, 3);
       Ldisp += " uH";
     }
@@ -264,54 +249,27 @@ void loop()
       if(LXval < 1.5e-1)
       {
         float LXmH = LXval * mHmult; // convert to mH 
-        Ldisp = " Lx = "; // then assemble top line string
         Ldisp += String(LXmH, 3);
         Ldisp += " mH";
       }
       else
       {
-        Ldisp = "  Over Range!";     
+        Ldisp = "Over Range";     
       }
     }
-    //lcd.print(Ldisp);  // show inductance value or over range msg
-    lcd_setText(1,charSize);
-    Serial.println(Ldisp);
+    
+    lcd_setText(1,charSize);  
     lcd_printLn(Ldisp);
     lcd_setText(1,1);
   }
-  //lcd.setCursor(0,1);     // then show F3 on second line
-  String F3disp = "(F3 = ";
-  F3disp += String(Freq3);
-  F3disp += " Hz)";
-  //lcd.print(F3disp);
-  Serial.println(F3disp);
-  lcd_printLn(F3disp);
   
-  // next section is for calibration nudging, only when LK1 is fitted 
-  if(digitalRead(CalLkPin) == LOW)  // if LK1 is fitted, check S3
-  {               // because it looks like some nudging is needed
-    Serial.println("Man Cal Enabled");
-    lcd_print("Man Cal Enabled: ");
-    lcd_printLn(String(CF));
-    if(digitalRead(IncrPin) == LOW) // if it's increment,
-    {
-      Serial.println("Calibrate Inc.");
-     
-      CF = CF * 1.005;   // nudge up CF by 0.5%
-      EEPROM.update(0, CF); // then resave new CF in EEPROM 
-    }
-    if(digitalRead(DecrPin) == LOW) // or if it's decrement,
-    {
-      Serial.println("Calibrate Dec.");
-     
-      CF = CF * 0.995;  // nudge CF down by 0.5%
-      EEPROM.update(0, CF); // then resave new CF in EEPROM 
-    }
-    // note that nudging only occurs when CalLkPin is LOW (i.e., LK1
-    // fitted) AND either IncrPin or DecrPin is taken LOW by S3.
-    // Otherwise nothing occurs!
+  if(digitalRead(CalLkPin) == LOW)  
+  {              
+    lcd_print("Man Cal Enabled:");
+    lcd_printLn(String(CF,3));
   }
-  delay(1500);
+  
+ delay(1500);
 }      // end of main loop
 
 // =====================================================================
@@ -361,19 +319,17 @@ void DispCalData()
   float L1uH = L1val * uHmult; // find uH equivalent of L1val
   float C1pF = C1val * pFmult; // and the pF equivalent of C1val
   lcd_reset();
-  //lcd.clear();      // first clear screen again (sets cursor to 0,0)
+  
   String C1disp = "C1= ";  // then assemble C1 display string
   C1disp += String(C1pF, 2);
   C1disp += " pF";
-  //lcd.print(C1disp); // and display on top line
-  Serial.println(C1disp);
+ 
   lcd_printLn(C1disp);
-  //lcd.setCursor(0,1);     // then move down to second line
+
   String L1disp = "L1= ";
   L1disp += String(L1uH, 2);
   L1disp += "uH";
-  //lcd.print(L1disp);  // and display on second line
-  Serial.println(L1disp);
+ 
   lcd_printLn(L1disp);
   delay(3000);        // pause for 3 seconds to allow digesting
   return;         // before returning
