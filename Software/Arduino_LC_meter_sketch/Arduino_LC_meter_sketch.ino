@@ -18,7 +18,7 @@
  */
 
 #include <EnableInterrupt.h>
-#include <TimerOne.h>
+#include "TimerTwo.h"
 #include "Wire.h"
 extern "C" { 
 #include "utility/twi.h"  // from Wire library, so we can do bus scanning
@@ -91,14 +91,7 @@ void DecrementCalClBk()
   }
 }
 
-void Test() 
-{
-  
-  lcd_reset();
-  lcd_setText(1,1);
-   
-  lcd_printLn("Digital LC Meter");
-}
+
 
 // ====================================================================
 // setup function begins here
@@ -110,7 +103,7 @@ void setup()
   enableInterrupt(4, DecrementCalClBk, CHANGE);
   enableInterrupt(10, IncrementCalClBk, CHANGE);
 
- 
+  Serial.begin(9600);
   
   pinMode(CLbarPin, INPUT_PULLUP);    // make pin 2 an input with pullup
   pinMode(RelayPin, OUTPUT);          // but make pin3 an output
@@ -182,6 +175,7 @@ void setup()
   
   lcd_printLn("Ready to measure");
   delay(2000);
+
   
 
   
