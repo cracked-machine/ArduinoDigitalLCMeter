@@ -16,7 +16,8 @@
    If you have one of these latter modules, the only change that
    should need to be made is to change the address in line 21 below.
  */
-
+ 
+#include "EEPROMUtils.h"
 #include <EnableInterrupt.h>
 #include "TimerTwo.h"
 #include "Wire.h"
@@ -31,7 +32,7 @@ extern "C" {
 #define OLED_RESET 9
 Adafruit_SSD1306 display(OLED_RESET);
                                     
-#include <EEPROM.h>               // include the EEPROM library
+
 #include <FreqCount.h>            // and the FreqCount library
 
 // ====================================================================
@@ -62,7 +63,8 @@ float LXval;     // calculated value for Lx (in H)
 float F1sqrd;    // calc value for Freq1 squared (as a float)
 float F2sqrd;    // calc value for Freq2 squared (as a float)
 float F3sqrd;    // calc value for Freq3 squared (as a float)
-float CF = 1.000;  // calibration factor, set by nudging via S3   
+
+volatile float CF;  // calibration factor, set by nudging via S3   
 
 long Fcount;   // raw frequency count figure (from GetFrequency function)
 long Freq1;    // measured Freq1 in Hz (L1 & C1 only)
@@ -73,23 +75,7 @@ byte MTorNot = 0;   // flag: 0 = EEPROM addresses empty (== 255)
 
 
 
-void IncrementCalClBk() 
-{
-  if(digitalRead(CalLkPin) == LOW)  
-  {              
-    CF = CF * 1.005;   // nudge up CF by 0.5%
-    EEPROM.update(0, CF); // then resave new CF in EEPROM   
-  }
-}
 
-void DecrementCalClBk() 
-{
-  if(digitalRead(CalLkPin) == LOW) 
-  {    
-    CF = CF * 0.995;  // nudge CF down by 0.5%
-    EEPROM.update(0, CF); // then resave new CF in EEPROM  
-  }
-}
 
 
 
@@ -100,8 +86,7 @@ void setup()
 { 
   Wire.begin();
   
-  enableInterrupt(4, DecrementCalClBk, CHANGE);
-  enableInterrupt(10, IncrementCalClBk, CHANGE);
+  
 
   Serial.begin(9600);
   
@@ -119,9 +104,6 @@ void setup()
   display.display();
 
  
-
-  
-  
   delay(100);
   
   lcd_reset();
@@ -132,33 +114,18 @@ void setup()
   if(digitalRead(CalErase) == LOW) 
   {   
     lcd_printLn("Factory Reset!");
-    
-    // if pin set to GND factory reset the eeprom by setting non-zero values.
-    for (int i = 0 ; i < EEPROM.length() ; i++) 
-    {
-      EEPROM.write(i, 255);
-    }
+    eraseEEPROM();
+    CF = getEEPROM();
     delay(1000);
   }
-  
-  int i = 0;          // just a counter for the loop below
-  // now check to see if CF is saved in EEPROM (addresses 0 - 3)
-  for (i = 0; i < 4; i++)
-  {
-    if (EEPROM.read(i) != 255)
-    {
-      MTorNot = 1;  // address not empty, so raise flag
-    }
-  } // end of loop checking EEPROM addresses 0-3
 
-  if (MTorNot == 0)      // if it is empty (i.e., fresh start)
-  {
-    EEPROM.put(0, CF);  // save CF in EEPROM 
-  }
-  else
-  {
-    EEPROM.get(0, CF);  // otherwise retrieve saved CF from EEPROM
-  }
+  
+  
+  
+  Serial.print("Getting stored CF: ");
+  CF = getEEPROM();
+  Serial.println(CF);
+  
   
   if(digitalRead(CLbarPin) == LOW)
   {
@@ -176,7 +143,8 @@ void setup()
   lcd_printLn("Ready to measure");
   delay(2000);
 
-  
+  enableInterrupt(4, DecrementCalClBk, CHANGE);
+  enableInterrupt(10, IncrementCalClBk, CHANGE);
 
   
 } // end of setup function
@@ -265,6 +233,30 @@ void loop()
   
  delay(1500);
 }      // end of main loop
+
+
+void IncrementCalClBk() 
+{
+  if(digitalRead(CalLkPin) == LOW)  
+  {              
+    CF = CF * 1.005;   // nudge up CF by 0.5%
+    updateEEPROM(CF);
+
+    
+  }
+}
+
+void DecrementCalClBk() 
+{
+  if(digitalRead(CalLkPin) == LOW) 
+  {    
+    CF = CF * 0.995;  // nudge CF down by 0.5%
+    updateEEPROM(CF);
+  
+  }
+}
+
+
 
 // =====================================================================
 // FindC1andL1() fn: for initial calibration
