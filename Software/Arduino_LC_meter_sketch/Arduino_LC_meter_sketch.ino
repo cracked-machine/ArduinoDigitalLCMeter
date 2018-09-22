@@ -25,12 +25,7 @@ extern "C" {
 #include "utility/twi.h"  // from Wire library, so we can do bus scanning
 }
 
-// 3rd party libs
-#include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
-
-#define OLED_RESET 9
-Adafruit_SSD1306 display(OLED_RESET);
+#include "OLEDUtils.h"
                                     
 
 #include <FreqCount.h>            // and the FreqCount library
@@ -72,10 +67,12 @@ long Freq2;    // measured Freq2 in Hz (L1 & (C1 + C2))
 long Freq3;    // measured Freq3 in Hz (C1+Cx/L1 or C1/L1+Lx)
 
 byte MTorNot = 0;   // flag: 0 = EEPROM addresses empty (== 255)
+int manCalibEnabled = 0;
 
+#define DEBOUNCE_DELAY 300 // in ms
+unsigned long lastDebounceTimeIncr = 0;  // the last time the output pin was toggled
 
-
-
+unsigned long lastDebounceTimeDecr = 0;  // the last time the output pin was toggled
 
 
 
@@ -86,7 +83,10 @@ void setup()
 { 
   Wire.begin();
   
-  
+  if(digitalRead(CalLkPin) == LOW) 
+  {
+    manCalibEnabled = 1;
+  }
 
   Serial.begin(9600);
   
@@ -101,27 +101,44 @@ void setup()
 
 
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);  // initialize with the I2C addr 0x3C (for the 128x32)
-  display.display();
+  lcd_update();
 
- 
-  delay(100);
+  // show splash screen
+  
+  lcd_reset();
+  lcd_update();
+
+  lcd_setText(1,1);
+  display.setCursor(15,4);
+  lcd_print("Digital LC Meter");
+  
+  
+  if(digitalRead(CalErase) == LOW) 
+  {   
+    display.setCursor(15,12);
+    eraseEEPROM();
+    CF = getEEPROM();
+    lcd_print("Factory Reset!");
+  }
+  
+  lcd_update();
+  delay(500);
+  display.setCursor(15,20);
+  lcd_print("Starting");
+  lcd_update();
+  delay(500);
+  for(int d=0;d<8;d++)
+  {
+    lcd_print(".");
+    delay(500);
+    lcd_update();
+  }
+
+  // do callibration and show results
   
   lcd_reset();
   lcd_setText(1,1);
    
-  lcd_printLn("Digital LC Meter");
- 
-  if(digitalRead(CalErase) == LOW) 
-  {   
-    lcd_printLn("Factory Reset!");
-    eraseEEPROM();
-    CF = getEEPROM();
-    delay(1000);
-  }
-
-  
-  
-  
   Serial.print("Getting stored CF: ");
   CF = getEEPROM();
   Serial.println(CF);
@@ -129,25 +146,30 @@ void setup()
   
   if(digitalRead(CLbarPin) == LOW)
   {
-    lcd_printLn("\nSet to CX mode \nand press reset!");
+    delay(500);
+    display.setCursor(15,7);
+    lcd_print("Set to CX mode");
+    display.setCursor(15,15);
+    lcd_print("and press reset!");
+    lcd_update();
     while(1)  { /* no go for callibration, idle */ }
   }                               
   
-  lcd_printLn("Starting calibration");
+  lcd_printLn("Calibration Complete!\n");
+  
   
   FindC1andL1();    // now do calibration, to find F1, F2, C1 & L1
+  
   DispCalData();    // then display C1 & L1 (pausing for 3 secs)
-  
-  lcd_printLn("Calibration done");
-  
-  lcd_printLn("Ready to measure");
+  lcd_update();
   delay(2000);
-
-  enableInterrupt(4, DecrementCalClBk, CHANGE);
-  enableInterrupt(10, IncrementCalClBk, CHANGE);
-
   
-} // end of setup function
+  // setup nudge and callibration-enable interrupts
+
+  enableInterrupt(DecrPin, DecrementCalClBk, CHANGE);
+  enableInterrupt(IncrPin, IncrementCalClBk, CHANGE);
+  enableInterrupt(CalLkPin, CalLkClBk, CHANGE);
+} 
 
  // ===================================================================
  // main loop() function begins here
@@ -155,112 +177,222 @@ void setup()
 void loop()
 {
   lcd_reset();
- 
+  
+  
   GetFrequency();             // go get current osc frequency
   Freq3 = Fcount;             // and copy into Freq3
   float F3 = float(Freq3);    // then convert to a float
   F3sqrd = pow(F3, 2.0);      // so it can be squared
-  String Cdisp;               // declare C display string
-  String Ldisp;               // declare L display string
+  
+  
    
   if(digitalRead(CLbarPin) == HIGH)  // if we're measuring a C
   {
-    lcd_printLn("Capacitance Mode");
-    CXval = C1val * CF * (float(F1sqrd/F3sqrd) - 1.0); // work it out
-     
-    if(CXval < 1.0e-9)     // if CXval < 1nF
-    {
-      float CXpF = CXval * pFmult;  // get equiv value in pF
-      Cdisp += String(CXpF, 3);
-      Cdisp += " pF";
-    }
-    else    // value must be 1nF or more
-    {
-      if(CXval < 1.0e-6)    // but check if it's less than 1uF
-      {
-        float CXnF = CXval * nFmult;  // if so, get equiv value in nF
-        Cdisp += String(CXnF, 3);
-        Cdisp += " nF";
-      }
-      else    // value must be 1uF or more
-      {
-        float CXuF = CXval * uFmult;  // so get equiv value in uF
-        Cdisp += String(CXuF, 3);
-        Cdisp += " uF";  
-      }
-    }
-    // now display the cap value string
-    lcd_setText(1,charSize);
-    
-    lcd_printLn(Cdisp);
-    lcd_setText(1,1);
+    measureCapacitance();
   }
   else    // CLbarPin == LOW, so we must be measuring an L
   {
-    lcd_printLn("Inductance Mode");
-    LXval = L1val * CF * (float(F1sqrd/F3sqrd) - 1.0); // work it out
-  
-    if(LXval < 1.0e-3)     // if LXval < 1mH
-    {
-      float LXuH = LXval * uHmult; // convert to uH 
-      Ldisp += String(LXuH, 3);
-      Ldisp += " uH";
-    }
-    else      // value must be 1mH or more
-    {
-      if(LXval < 1.5e-1)
-      {
-        float LXmH = LXval * mHmult; // convert to mH 
-        Ldisp += String(LXmH, 3);
-        Ldisp += " mH";
-      }
-      else
-      {
-        Ldisp = "Over Range";     
-      }
-    }
-    
-    lcd_setText(1,charSize);  
-    lcd_printLn(Ldisp);
-    lcd_setText(1,1);
+    measureInductance();
   }
   
   if(digitalRead(CalLkPin) == LOW)  
   {              
+    manCalibEnabled = 1;
+    display.setCursor(0,25);
+    lcd_setText(1,1);
     lcd_print("Man Cal Enabled:");
     lcd_printLn(String(CF,3));
   }
-  
- delay(1500);
-}      // end of main loop
+  else 
+  {
+    manCalibEnabled = 0;
+  }
+  lcd_update();
+  //delay(50);
+}     
+
+// =====================================================================
+// Callback - Calibration Lk  switch
+// =====================================================================
+
+void CalLkClBk()
+{
+  if(digitalRead(CalLkPin) == LOW)  
+  {              
+    manCalibEnabled = 1;
+    display.setCursor(0,25);
+    lcd_setText(1,1);
+    lcd_print("Man Cal Enabled:");
+    lcd_printLn(String(CF,3));
+  }
+  else 
+  {
+    manCalibEnabled = 0;
+  }
+}
+
+// =====================================================================
+// Callback - IncrementCalClBk()
+// =====================================================================
+
+
 
 
 void IncrementCalClBk() 
 {
-  if(digitalRead(CalLkPin) == LOW)  
-  {              
-    CF = CF * 1.005;   // nudge up CF by 0.5%
-    updateEEPROM(CF);
+  uint32_t interrupt_time = millis();
+  
+  if (interrupt_time - lastDebounceTimeIncr > DEBOUNCE_DELAY) 
+  {
+    if(digitalRead(CalLkPin) == LOW)  
+    {              
+      CF = CF * 1.002;   // nudge up CF by 0.5%
+      updateEEPROM(CF);
 
-    
+    }
   }
+  lastDebounceTimeIncr = interrupt_time;
+  
 }
+
+// =====================================================================
+// Callback - DecrementCalClBk() 
+// =====================================================================
+
 
 void DecrementCalClBk() 
 {
-  if(digitalRead(CalLkPin) == LOW) 
-  {    
-    CF = CF * 0.995;  // nudge CF down by 0.5%
-    updateEEPROM(CF);
+  uint32_t interrupt_time = millis();
   
+  if (interrupt_time - lastDebounceTimeDecr > DEBOUNCE_DELAY) 
+  {
+    if(digitalRead(CalLkPin) == LOW) 
+    {    
+      CF = CF * 0.998;  // nudge CF down by 0.5%
+      updateEEPROM(CF);
+    
+    }
   }
+  lastDebounceTimeDecr = interrupt_time;
+  
 }
 
+// =====================================================================
+// measureCapacitance() 
+// =====================================================================
+
+void measureCapacitance() 
+{
+  String unit;
+  String Cdisp;               // declare C display string
+  display.setCursor(16,0);
+
+  lcd_print("Capacitance Mode");
+
+  
+  CXval = C1val * CF * (float(F1sqrd/F3sqrd) - 1.0); // work it out
+   
+  if(CXval < 1.0e-9)     // if CXval < 1nF
+  {
+    float CXpF = CXval * pFmult;  // get equiv value in pF
+    Cdisp += String(CXpF, 3);
+    unit = " pF";
+  }
+  else    // value must be 1nF or more
+  {
+    if(CXval < 1.0e-6)    // but check if it's less than 1uF
+    {
+      float CXnF = CXval * nFmult;  // if so, get equiv value in nF
+      Cdisp += String(CXnF, 3);
+      unit = " nF";
+    }
+    else    // value must be 1uF or more
+    {
+      float CXuF = CXval * uFmult;  // so get equiv value in uF
+      Cdisp += String(CXuF, 3);
+      unit = " uF";  
+    }
+  }
+  
+  // display the cap value string and unit
+  lcd_setText(1,charSize);
+  
+  if(manCalibEnabled) // we have limited space
+  {
+    display.setCursor(0,8);
+    lcd_print(Cdisp);
+    display.setCursor(90,8);
+    lcd_print(unit);
+  }
+  else // we have more space
+  {
+    display.setCursor(0,12);
+    lcd_print(Cdisp);
+    display.setCursor(90,12);
+    lcd_print(unit);
+  }
+  lcd_setText(1,1);
+  
+  
+}
+
+// =====================================================================
+// measureInductance() 
+// =====================================================================
+
+void measureInductance() 
+{
+  String unit;
+  String Ldisp;               // declare L display string  
+  display.setCursor(16,0);
+  lcd_print("Inductance Mode");
+  LXval = L1val * CF * (float(F1sqrd/F3sqrd) - 1.0); // work it out
+
+  if(LXval < 1.0e-3)     // if LXval < 1mH
+  {
+    float LXuH = LXval * uHmult; // convert to uH 
+    Ldisp += String(LXuH, 3);
+    unit = " uH";
+  }
+  else      // value must be 1mH or more
+  {
+    if(LXval < 1.5e-1)
+    {
+      float LXmH = LXval * mHmult; // convert to mH 
+      Ldisp += String(LXmH, 3);
+      unit = " mH";
+    }
+    else
+    {
+      Ldisp = "Over Range";     
+    }
+  }
+  
+  lcd_setText(1,charSize); 
+  
+  if(manCalibEnabled) // we have limited space
+  {
+    display.setCursor(0,8); 
+    lcd_printLn(Ldisp);
+    display.setCursor(90,8);
+    lcd_print(unit);
+  }
+  else                // we have more space
+  {
+    display.setCursor(0,12); 
+    lcd_printLn(Ldisp);
+    display.setCursor(90,12);
+    lcd_print(unit);
+  }
+  lcd_setText(1,1);
+
+}
 
 
 // =====================================================================
 // FindC1andL1() fn: for initial calibration
 // =====================================================================
+
 void FindC1andL1()
 {
   digitalWrite(RelayPin, LOW);  // make sure RLY1 is off (for C1 only)
@@ -281,11 +413,13 @@ void FindC1andL1()
   C1val = C2val * float(F2sqrd / F1sqlessF2sq);    // then work out C1
   L1val = 1.0/(FourPiSqrd * float(F1sqrd) * C1val);  // and L1
   return; 
-}  // end of FindC1andL1 function
+}  
+
 
 // =====================================================================
 // GetFrequency() fn: to measure IC1's current oscillating frequency
 // =====================================================================
+
 void GetFrequency()
   {
   FreqCount.begin(1000);   // start counter, with a gating time of 1 sec  
@@ -295,59 +429,34 @@ void GetFrequency()
   Fcount = FreqCount.read();   // when it's available, read into Fcount
   FreqCount.end();        // and close off counter before leaving
   return;
-  } // end of GetFrequency function
+  } 
+
 
 // =====================================================================
 // DispCalData() fn: to display calibration data (C1 and L1)
 // =====================================================================
+
 void DispCalData()
 {
   float L1uH = L1val * uHmult; // find uH equivalent of L1val
   float C1pF = C1val * pFmult; // and the pF equivalent of C1val
-  lcd_reset();
+  
   
   String C1disp = "C1= ";  // then assemble C1 display string
   C1disp += String(C1pF, 2);
-  C1disp += " pF";
- 
-  lcd_printLn(C1disp);
-
+  
+  display.setCursor(16,15);
+  lcd_print(C1disp);
+  display.setCursor(100,15);
+  lcd_print("pF");
+  
   String L1disp = "L1= ";
   L1disp += String(L1uH, 2);
-  L1disp += "uH";
+  display.setCursor(16,23);
+  lcd_print(L1disp);
+  display.setCursor(100,23);
+  lcd_print("uH");
  
-  lcd_printLn(L1disp);
-  delay(3000);        // pause for 3 seconds to allow digesting
   return;         // before returning
-} // end of DispCalData function
-
-
-void lcd_print(String msg) 
-{
-  display.print(msg);
-  display.display();
-}
-
-void lcd_printLn(String msg) 
-{
-  
-  display.println(msg);
-  display.display();
-}
-
-void lcd_reset() 
-{
-  display.clearDisplay();
-  display.setCursor(0,0);
-}
-
-void lcd_setText(int pColor, int pSize) 
-{
-  display.setTextSize(pSize);
-  display.setTextColor(pColor);
-}
-
-
-// =====================================================================
-//    end of code
+} 
 

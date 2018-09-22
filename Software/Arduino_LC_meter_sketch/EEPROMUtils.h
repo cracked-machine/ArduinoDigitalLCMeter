@@ -11,9 +11,9 @@ float getEEPROM()
   float storedVal = 0;
  
   EEPROM.get(0, storedVal);
-  Serial.print("EEPROM retrieved: ");
+  //Serial.print("EEPROM retrieved: ");
   
-  Serial.println(storedVal);
+  //Serial.println(storedVal);
   return storedVal;
 }
 
@@ -48,8 +48,8 @@ int checkEEPROM()
 
 void updateEEPROM(float pVal)
 {
-  Serial.print("Write ");
-  Serial.println(pVal);
+  //Serial.print("Write ");
+  //Serial.println(pVal);
   EEPROM.put(0, pVal);
  //getEEPROM();
 }
@@ -62,12 +62,8 @@ void updateEEPROM(float pVal)
 
 void eraseEEPROM()
 {
-    Serial.println("FactoryReset");
+    //Serial.println("FactoryReset");
     updateEEPROM(1.000);
-    // if pin set to GND factory reset the eeprom by setting non-zero values.
-   // for (int i = 0 ; i < EEPROM.length() ; i++) 
-   // {
-   //   EEPROM.write(i, 1);
-   // }
+ 
 }
 
