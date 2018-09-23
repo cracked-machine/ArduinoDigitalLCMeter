@@ -10,7 +10,7 @@ ArduinoNano-based Digital LC Meter with 2.42" OLED display
 - [x] Build perfboard prototype
 - [x] Cut panel
 - [x] Assemble prototpye
-- [ ] Complete Firmware
+- [x] Complete Firmware
 
 ### Schematic
 
