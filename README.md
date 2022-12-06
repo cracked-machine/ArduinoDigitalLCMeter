@@ -1,16 +1,7 @@
 # ArduinoDigitalLCMeter
 ArduinoNano-based Digital LC Meter with 2.42" OLED display
 
-### TODO
-
-- [x] Test design on breadboard with OLED display
-- [x] Create schematic
-- [x] Design front panel / user interface
-- [x] Create board Layout
-- [x] Build perfboard prototype
-- [x] Cut panel
-- [x] Assemble prototpye
-- [x] Complete Firmware
+Based on this Silicon Chip magazine [article](Silicon Chip June 2017 p28-53.pdf)
 
 ### Schematic
 
